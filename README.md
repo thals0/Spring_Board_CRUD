@@ -1,4 +1,4 @@
-# 🌀 Spring Board로 CRUD 구현해보기
+# 🌀 Spring으로 CRUD 구현 연습
 
 ### ✨ [API 명세서](https://documenter.getpostman.com/view/23139158/2s93JtPiMk)
 
