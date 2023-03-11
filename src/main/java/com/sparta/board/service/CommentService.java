@@ -1,7 +1,7 @@
 package com.sparta.board.service;
 
 import com.sparta.board.dto.CommentRequestDto;
-import com.sparta.board.dto.CommentResponsDto;
+import com.sparta.board.dto.CommentResponseDto;
 import com.sparta.board.dto.StatusCodeDto;
 import com.sparta.board.entity.Board;
 import com.sparta.board.entity.Comment;
@@ -27,7 +27,7 @@ public class CommentService {
     // 댓글 작성
     // 해당 게시글 , 유저 확인
     @Transactional
-    public CommentResponsDto createComment(Long postId, CommentRequestDto commentRequestDto, HttpServletRequest req) {
+    public CommentResponseDto createComment(Long postId, CommentRequestDto commentRequestDto, HttpServletRequest req) {
         User user = userService.isLogin(req);
         // post도 받아와야 하는ㄷㅔ ? 아니면 postid 라던가 ..
         // 일단 client에서 api로 postid 받아옴
@@ -41,7 +41,7 @@ public class CommentService {
         //  일단 지금은 보류
         Comment comment = new Comment(commentRequestDto, user, post);
         commentRepository.save(comment);
-        return new CommentResponsDto(comment);
+        return new CommentResponseDto(comment);
     }
 
 
@@ -53,7 +53,7 @@ public class CommentService {
 
     @Transactional
     // 댓글 수정
-    public CommentResponsDto updateComment(Long postId, Long commentId, CommentRequestDto commentRequestDto, HttpServletRequest req) {
+    public CommentResponseDto updateComment(Long postId, Long commentId, CommentRequestDto commentRequestDto, HttpServletRequest req) {
         // 토큰 검사 후 유효한 토큰이면서 해당 사용자가 작성한 댓글만 수정 가능
         User user = userService.isLogin(req);
         Board post = boardService.isExistBoard(postId);
@@ -64,14 +64,14 @@ public class CommentService {
             );
             comment.update(commentRequestDto.getContent());
             commentRepository.save(comment);
-            return new CommentResponsDto(comment);
+            return new CommentResponseDto(comment);
         } else{
             Comment comment = commentRepository.findByIdAndPostAndUser(commentId, post, user).orElseThrow(
                     ()-> new IllegalArgumentException("작성자만 삭제/수정할 수 있습니다.")
             );
             comment.update(commentRequestDto.getContent());
             commentRepository.save(comment);
-            return new CommentResponsDto(comment);
+            return new CommentResponseDto(comment);
         }
     }
 

@@ -4,11 +4,11 @@ import com.sparta.board.entity.User;
 import lombok.Getter;
 
 @Getter
-public class SignupResponsDto {
+public class SignupResponseDto {
     private String username;
     private String password;
 
-    public SignupResponsDto(User user) {
+    public SignupResponseDto(User user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
     }

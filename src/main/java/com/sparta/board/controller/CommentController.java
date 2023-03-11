@@ -2,15 +2,13 @@ package com.sparta.board.controller;
 
 
 import com.sparta.board.dto.CommentRequestDto;
-import com.sparta.board.dto.CommentResponsDto;
+import com.sparta.board.dto.CommentResponseDto;
 import com.sparta.board.dto.StatusCodeDto;
-import com.sparta.board.entity.Comment;
 import com.sparta.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,13 +21,13 @@ public class CommentController {
 
     // 댓글 작성
     @PostMapping("/")
-    public CommentResponsDto createComment(@PathVariable Long postId, @RequestBody CommentRequestDto commentRequestDto, HttpServletRequest req){
+    public CommentResponseDto createComment(@PathVariable Long postId, @RequestBody CommentRequestDto commentRequestDto, HttpServletRequest req){
         return commentService.createComment(postId, commentRequestDto, req);
     }
 
     // 댓글 수정
     @PutMapping("/{commentId}")
-    public CommentResponsDto updateComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto, HttpServletRequest req){
+    public CommentResponseDto updateComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto, HttpServletRequest req){
         return commentService.updateComment(postId, commentId, commentRequestDto, req);
     }
 

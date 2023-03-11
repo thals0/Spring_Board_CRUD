@@ -1,13 +1,10 @@
 package com.sparta.board.controller;
 
 import com.sparta.board.dto.LoginRequestDto;
-import com.sparta.board.dto.LoginResponsDto;
 import com.sparta.board.dto.SignupRequestDto;
-import com.sparta.board.dto.SignupResponsDto;
 import com.sparta.board.entity.User;
 import com.sparta.board.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
