@@ -4,7 +4,7 @@
     - [x]  username, password를 Client에서 전달받기
     - [x]  username은  `최소 4자 이상, 10자 이하이며 알파벳 소문자(a~z), 숫자(0~9)`로 구성되어야 한다.
     - [x]  password는  `최소 8자 이상, 15자 이하이며 알파벳 대소문자(a~z, A~Z), 숫자(0~9)`로 구성되어야 한다.
-    - [ ]  DB에 중복된 username이 없다면 회원을 저장하고 Client 로 성공했다는 메시지, 상태코드 반환하기
+    - [x]  DB에 중복된 username이 없다면 회원을 저장하고 Client 로 성공했다는 메시지, 상태코드 반환하기
     - 참고자료
         1. [https://mangkyu.tistory.com/174](https://mangkyu.tistory.com/174)
         2. [https://ko.wikipedia.org/wiki/정규_표현식](https://ko.wikipedia.org/wiki/%EC%A0%95%EA%B7%9C_%ED%91%9C%ED%98%84%EC%8B%9D)
@@ -39,4 +39,4 @@
 - [x]  선택한 게시글 삭제 API
     - [x]  ~~삭제를 요청할 때 비밀번호를 같이 보내서 서버에서 비밀번호 일치 여부를 확인 한 후~~
     - [x]  토큰을 검사한 후, 유효한 토큰이면서 해당 사용자가 작성한 게시글만 삭제 가능
-    - [ ]  선택한 게시글을 삭제하고 Client 로 성공했다는 메시지, 상태코드 반환하기
+    - [x]  선택한 게시글을 삭제하고 Client 로 성공했다는 메시지, 상태코드 반환하기
