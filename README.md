@@ -29,7 +29,7 @@
     - [x]  선택한 댓글의 DB 저장 유무를 확인하기
     - [x]  선택한 댓글이 있다면 댓글 삭제하고 Client 로 성공했다는 메시지, 상태코드 반환하기
 6. 예외 처리
-   > new IllegalArgumentException로 error 던지니까 statusCode:500뜸 (수정 필요)
+   > `new IllegalArgumentException` 로 error 던지니까 statusCode:500뜸 (수정 필요)
     - [ ]  토큰이 필요한 API 요청에서 토큰을 전달하지 않았거나 정상 토큰이 아닐 때는 "토큰이 유효하지 않습니다." 라는 에러메시지와 statusCode: 400을 Client에 반환하기
     - [ ]  토큰이 있고, 유효한 토큰이지만 해당 사용자가 작성한 게시글/댓글이 아닌 경우에는 “작성자만 삭제/수정할 수 있습니다.”라는 에러메시지와 statusCode: 400을 Client에 반환하기
     - [ ]  DB에 이미 존재하는 username으로 회원가입을 요청한 경우 "중복된 username 입니다." 라는 에러메시지와 statusCode: 400을 Client에 반환하기
