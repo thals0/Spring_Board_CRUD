@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     Optional<Comment> findByIdAndPostAndUser(Long id, Board post, User user);
+    Optional<Comment> findByIdAndUser(Long id, User user);
     void deleteByIdAndPostAndUser(Long id, Board post, User user);
 
     List<Comment> findAllByPostOrderByModifiedAtDesc(Board post);

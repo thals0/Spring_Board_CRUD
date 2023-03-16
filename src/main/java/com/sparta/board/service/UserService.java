@@ -2,22 +2,19 @@ package com.sparta.board.service;
 
 import com.sparta.board.dto.LoginRequestDto;
 import com.sparta.board.dto.SignupRequestDto;
-import com.sparta.board.dto.StatusCodeDto;
 import com.sparta.board.entity.User;
 import com.sparta.board.entity.UserRoleEnum;
 import com.sparta.board.jwt.JwtUtil;
 import com.sparta.board.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 // jdk
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,15 +27,16 @@ import org.springframework.validation.annotation.Validated;
 public class UserService {
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
 
     // 관리자 토큰
     private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
     // 회원가입
     @Transactional
-    public User signup(@Valid SignupRequestDto signupRequestDto) {
+    public void signup(@Valid SignupRequestDto signupRequestDto) {
         String username = signupRequestDto.getUsername();
-        String password = signupRequestDto.getPassword();
+        String password = passwordEncoder.encode(signupRequestDto.getPassword());
 
         // 중복 아이디 불가
         Optional<User> found = userRepository.findByUsername(username);
@@ -56,11 +54,12 @@ public class UserService {
             role = UserRoleEnum.ADMIN;
         }
 
-        User user = userRepository.saveAndFlush(new User(username, password, role));
-        return user;
+        User user = new User(username, password, role);
+        userRepository.save(user);
     }
 
-    public User login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    @Transactional(readOnly = true)
+    public void login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
         String username = loginRequestDto.getUsername();
         String password = loginRequestDto.getPassword();
 
@@ -71,13 +70,15 @@ public class UserService {
 
         // 비밀번호 확인
         // TODO: statuscode 400으로 날리기
-        if(!user.getPassword().equals(password)){
+        // 비밀번호 확인
+        if(!passwordEncoder.matches(password, user.getPassword())){
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername()));
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
 
-        return user;
+//        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
+//        return user;
     }
 
     @Transactional(readOnly = true)
